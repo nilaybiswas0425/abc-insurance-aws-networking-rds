@@ -128,13 +128,13 @@ These settings support hostname-based connectivity, including use of an RDS DNS 
                          ABC INSURANCE VPC
                             10.0.0.0/16
                                   |
-                    +-------------+-------------+
-                    |                           |
-             abc-public-rt               abc-private-rt
-              IGW + local                  local only
-                    |                           |
-          +---------+---------+       +---------+---------+
-          |                   |       |                   |
+                    +-------------+-------------------+
+                    |                                 |
+             abc-public-rt                      abc-private-rt
+              IGW + local                          local only
+                    |                                 |
+          +---------+---------+             +---------+---------+
+          |                   |             |                   |
      Public subnet A     Public subnet B  Private DB A   Private DB B
       10.0.1.0/24         10.0.2.0/24     10.0.20.0/24  10.0.21.0/24
        us-east-1a          us-east-1b      us-east-1a     us-east-1b
@@ -157,29 +157,31 @@ The public subnets have a route to the Internet Gateway. The private database su
 
 ## Screenshots
 
-
 ```text
 screenshots/
 ├── 01-vpc/
-│   ├── 01-vpc-details.png
-│   └── 06-vpc-resource-map.png
+│   ├── 01-vpc-created.png
+│   └── 02-main-route-table.png
+│   └── 03-default-nacl-inbound.png
+│   └── 03-default-nacl-outbound.png
+│   └── 04-default-security-group-inbound.png
+│   └── 04-default-security-group-outbound.png
+│   └── 05-vpc-resource-map.png
 ├── 02-subnets/
-│   ├── 01-public-subnet-a.png
-│   ├── 02-public-subnet-b.png
-│   ├── 03-private-db-subnet-a.png
-│   └── 04-private-db-subnet-b.png
+│   ├── 1_abc-public-subnet-a.png
+│   ├── 2_abc-private-db-subnet-a.png
+│   ├── 3_abc-public-subnet-b.png
+│   └── 4_abc-private-db-subnet-b.png
 ├── 03-internet-gateway/
-│   └── 01-internet-gateway-attached.png
+│   └── 1_abc-insurance-igw.png
 ├── 04-routing/
-│   ├── 01-public-route-table.png
-│   ├── 02-public-subnet-associations.png
-│   ├── 03-private-route-table.png
-│   └── 04-private-subnet-associations.png
-└── 05-security/
-    ├── 01-rds-security-group.png
-    ├── 02-application-security-group.png
-    ├── 03-network-acl-inbound.png
-    └── 04-network-acl-outbound.png
+│   ├── 1_abc-public-rt-routes.png
+│   ├── 2_abc-public-rt-subnet-associations.png
+│   ├── 3_abc-private-rt-routes.png
+│   └── 4-abc-private-rt-subnet-associations.png
+└── 05-NACL/
+    ├── 01-default-nacl-inbound.png
+    ├── 02-default-nacl-outbound.png
 ```
 
 The screenshots document the AWS Console configuration at the time this module was completed. Review and update this document if the infrastructure changes.
