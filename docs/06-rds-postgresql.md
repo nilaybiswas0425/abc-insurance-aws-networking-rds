@@ -74,8 +74,6 @@ The following settings were selected or observed during creation. Items marked *
 | Authentication | Password authentication |
 | Credentials management | Self-managed |
 
-**Credential handling:** The master password is secret. Do not put it in this document, commit it to GitHub, include it in source code, or expose it in screenshots. Use secure local secret handling or an AWS-supported secret store when application integration is implemented.
-
 ## 4. Connectivity and security
 
 The RDS console showed:
@@ -197,7 +195,6 @@ Then verify:
 SELECT current_database(), current_user;
 ```
 
-No application tables or schemas are part of this module's learning objective.
 
 ## 6. Role of RDS in the Generative AI application
 
@@ -212,33 +209,7 @@ The intended retrieval flow is:
 
 RDS is the source for structured operational facts. The Knowledge Base is the retrieval source for unstructured document content. The application/orchestration layer connects the two.
 
-## 7. Cost and lifecycle considerations
 
-This is a learning environment and should be operated only when needed.
-
-- Start the DB instance for hands-on sessions and stop it when finished, where supported.
-- Stopping an RDS DB instance stops DB instance compute billing, but allocated storage and applicable backup/snapshot storage can continue to incur charges.
-- A stopped RDS DB instance is automatically restarted after seven days.
-- Automated backups, retained automated backups, and manual snapshots have their own storage and retention considerations.
-- Before deleting the temporary lab database at the end of the module, review final-snapshot and automated-backup retention choices. Avoid retaining snapshots or backups unintentionally.
-- The VPC, subnets, route tables, security groups, and DB subnet group do not have hourly charges by themselves.
-- No NAT Gateway or EC2 bastion was created for this connectivity exercise.
-- Check current AWS pricing and service documentation for CloudShell VPC environment limits and any applicable charges.
-
-No fixed monthly cost is recorded because the actual Single-AZ/Multi-AZ setting, storage type, usage duration, and current regional prices must be verified before calculating a reliable estimate.
-
-## 8. Items to verify in the AWS console
-
-Before treating the configuration record as final, confirm:
-
-- [ ] DB instance status is `Available`.
-- [ ] Deployment is Single-AZ or Multi-AZ; record the actual value.
-- [ ] Storage type is recorded (for example, gp3 if that is what the instance uses).
-- [ ] CloudShell VPC environment uses `abc-insurance-vpc`.
-- [ ] CloudShell VPC environment subnet name and AZ are recorded.
-- [ ] CloudShell VPC environment uses `abc-insurance-app-sg`.
-- [ ] RDS inbound rule is TCP `5432` from `abc-insurance-app-sg`.
-- [ ] The application database `abc_insurance` is reachable using `\c abc_insurance`.
 
 ## 9. Suggested screenshots
 
@@ -246,18 +217,6 @@ Store screenshots under `screenshots/02-rds/`:
 
 ```text
 screenshots/
-└── 02-rds/
+└── 07-rds/
     ├── 01-db-subnet-group-created.png
-    ├── 02-rds-instance-configuration.png
-    ├── 03-rds-connectivity-security.png
-    ├── 04-rds-security-group-inbound.png
-    ├── 05-cloudshell-vpc-environment.png
-    ├── 06-psql-connection-success.png
-    └── 07-postgresql-version-and-database-list.png
 ```
-
-Before committing screenshots, hide passwords, secret values, account IDs, and other sensitive information. The RDS endpoint and resource IDs are not passwords, but may be redacted for public portfolio screenshots.
-
----
-
-**Module outcome:** A standard Amazon RDS for PostgreSQL 17.7 instance was created in the ABC Insurance VPC, configured as not publicly accessible, and successfully reached from a CloudShell VPC environment through a security-group-authorized PostgreSQL connection. A dedicated logical database named `abc_insurance` was also created. The next learning activity is to retrieve structured data from RDS using Python, then combine that retrieval with document retrieval from the existing Bedrock Knowledge Base.
