@@ -157,7 +157,6 @@ The public subnets have a route to the Internet Gateway. The private database su
 
 ## Screenshots
 
-Store the console screenshots in the repository using this structure. Update filenames if your local names differ.
 
 ```text
 screenshots/
